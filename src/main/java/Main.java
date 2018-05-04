@@ -9,14 +9,13 @@ public class Main {
     }
 
     private void start() {
-        String author = "Tolkien";
-        String title = "Hobbit";
-        // List<Book> books = library.search(title);
-        // System.out.println(books);
-        List<Book> books2 = library.searchAuthor(author);
+
+        List<Book> books2 = library.search(Filters.title("an"));
         System.out.println(books2);
-        List<Book> books3 = library.searchCategory(CategoryBook.NOVEL);
-        //System.out.println(books3);
-        //  library.search(title("Ania"), author("Lem"), year(1989));
+        List<Book> books3 = library.search(Filters.category(CategoryBook.ADVENTURE));
+        System.out.println(books3);
+        List<Book> books1 = library.search(Filters.author("Jo"),Filters.title("Ja"));
+        System.out.println(books1);
+
     }
 }

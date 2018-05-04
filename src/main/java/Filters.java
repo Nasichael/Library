@@ -18,4 +18,8 @@ public class Filters {
         return book -> book.getYear() == year;
     }
 
+    public static Predicate<Book> ID(int ID) {
+        return book -> book.getId() == ID;
+    }
+
 }

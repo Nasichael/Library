@@ -19,62 +19,23 @@ public class Library {
         books.put(8, new Book("John Ronald Reuel Tolkien", (short) 1954, CategoryBook.FANTASY, "Władca Pierścieni", 4001));
         books.put(9, new Book("John Ronald Reuel Tolkien", (short) 1954, CategoryBook.FANTASY, "Władca Pierścieni", 4002));
         books.put(10, new Book("John Ronald Reuel Tolkien", (short) 1937, CategoryBook.FANTASY, "Hobbit", 4010));
-        books.put(11, new Book("Joshua Bloch", (short) 1937, CategoryBook.CLASSIC, "Effective Java", 5010));
-    }
-    /*public List<Book> search(List<Predicate<Book>> predicates) {
-        return null;
-    }*/
-
-    public List<Book> search(String title) {
-        List<Book> filteredBooks = new ArrayList<>();
-
-        final Predicate<Book> bookPredicate = book -> title.contains(book.getTitle());
-        final List<Book> filteredByStreamBooks = books.values().stream()
-                .filter(bookPredicate)
-                .collect(Collectors.toList());
-
-        filteredBooks.addAll(filteredByStreamBooks); //dlaczego nie robimy return filterdByStreamBooks?
-
-       /* for (Book book : books.values()) {
-            if (bookPredicate.test(book)) {
-                // if (title.equalsIgnoreCase(book.getTitle())) {
-                filteredBooks.add(book);
-            }*/
-
-        System.out.println(filteredBooks.size());
-        return filteredBooks;
+        books.put(11, new Book("Joshua Bloch", (short) 2017, CategoryBook.GUIDE, "Effective Java", 5010));
+        books.put(12, new Book("Edgar Rice Burroughs", (short) 1912, CategoryBook.ADVENTURE, "Tarzan of the Apes", 6000));
+        books.put(13, new Book("Jules Verne", (short) 1864, CategoryBook.SCIENCEFICTION, "Journey to the Center of the Earth", 1030));
     }
 
 
-    public List<Book> searchAuthor(String author) {
-        final Predicate<Book> authorPredicate = book -> book.getAuthor().contains(author);
-
-        final List<Book> filteredAuthorBooks = books.values().stream()
-                .filter(authorPredicate)
-                .collect(Collectors.toList());
-        System.out.println(filteredAuthorBooks.size());
-        return filteredAuthorBooks;
-    }
-
-    public List<Book> searchCategory(CategoryBook category) {
-        final Predicate<Book> categoryPredicate = book -> book.getCategoryBook().equals(category);
-        List<Book> filteredCategoryBooks = books.values().stream()
-                .filter(categoryPredicate)
-                .collect(Collectors.toList());
-        System.out.println(filteredCategoryBooks.size());
-        return filteredCategoryBooks;
-    }
-
-    public List<Book> search2(Predicate<Book>... predicates) {
+    public List<Book> search(Predicate<Book>... predicates) {
 
         final Predicate<Book> bookPredicate = Arrays.stream(predicates)
+
                 .reduce(Predicate::and)
                 .orElse(t -> true);
 
-        List<Book> filteredCategoryBooks = books.values().stream()
+        List<Book> filteredBooks = books.values().stream()
                 .filter(bookPredicate)
                 .collect(Collectors.toList());
-        System.out.println(filteredCategoryBooks.size());
-        return filteredCategoryBooks;
+        System.out.println(filteredBooks.size());
+        return filteredBooks;
     }
 }

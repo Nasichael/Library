@@ -1,6 +1,7 @@
 import java.util.List;
-import org.junit.Assert.*;
+
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 
 
@@ -12,44 +13,70 @@ public class LibraryTest {
     public void shouldSearchForExistingTitle() {
 
         //given
-        String title = "Solaris";
+        String title = "Ania";
 
         //when
-        final List<Book> bookList = library.search(title);
+        final List<Book> bookList = library.search(Filters.title(title));
 
         //then
         assertEquals(2, bookList.size());
     }
 
+    @Test
+    public void shouldSearchCategoryAndTitle() {
+
+        //given
+        CategoryBook categoryBook = CategoryBook.SCIENCEFICTION;
+        String title = "Sol";
+
+        //when
+        final List<Book> bookList = library.search(Filters.category(categoryBook),Filters.title(title));
+
+        //then
+        assertEquals(2, bookList.size());
+    }
 
     @Test
     public void shouldSearchByManyFilters() {
 
         //given
-        String title = "Java";
-        String author = "Jo";
+        String title = "Avon";
+        String author = "Lucy";
+        CategoryBook categoryBook = CategoryBook.NOVEL;
 
         //when
-        final List<Book> bookList = library.search2(Filters.author("ttt"), Filters.title("andrzej"));
+        final List<Book> bookList = library.search(Filters.category(CategoryBook.NOVEL),
+                Filters.title(title),Filters.author(author),Filters.category(CategoryBook.NOVEL));
 
         //then
         assertEquals(1, bookList.size());
-
     }
 
     @Test
-    public void shouldSearchCategory() {
+    public void shouldSearchByID() {
 
         //given
-        CategoryBook categoryBook = CategoryBook.SCIENCEFICTION;
+        int ID = 4001;
 
         //when
-        final List<Book> bookList = library.search2(Filters.category(categoryBook));
+        final List<Book> bookList = library.search(Filters.ID(ID));
 
         //then
-        assertEquals(4, bookList.size());
-
+        assertEquals(1,bookList.size());
     }
 
+    @Test
+    public void shouldSearchByYear(){
+
+        //given
+        short year = 2017;
+
+        //when
+        List<Book> bookList = library.search(Filters.year(year));
+
+        //then
+        assertEquals(1,bookList.size());
+
+    }
 }
 
