@@ -1,3 +1,8 @@
+package library.engine;
+
+import library.data.Book;
+import library.data.CategoryBook;
+
 import java.util.function.Predicate;
 
 public class Filters {

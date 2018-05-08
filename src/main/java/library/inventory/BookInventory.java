@@ -1,14 +1,17 @@
-import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+package library.inventory;
 
-public class Library {
+import library.data.Book;
+import library.data.CategoryBook;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+public class BookInventory {
 
     Map<Integer, Book> books = new HashMap<>();
-    Map<Integer, Book> cds = new HashMap<>();
 
-    Library() {
-
+    public BookInventory() {
         books.put(1, new Book("Stanisław Lem", (short) 1961, CategoryBook.SCIENCEFICTION, "Solaris", 1000));
         books.put(2, new Book("Stanisław Lem", (short) 1961, CategoryBook.SCIENCEFICTION, "Solaris", 1001));
         books.put(3, new Book("Stanisław Lem", (short) 1959, CategoryBook.SCIENCEFICTION, "Eden", 1010));
@@ -24,18 +27,12 @@ public class Library {
         books.put(13, new Book("Jules Verne", (short) 1864, CategoryBook.SCIENCEFICTION, "Journey to the Center of the Earth", 1030));
     }
 
+    public Collection<Book> getAll() {
+        return books.values();
+    }
 
-    public List<Book> search(Predicate<Book>... predicates) {
+    public Book getById(int bookId) {
 
-        final Predicate<Book> bookPredicate = Arrays.stream(predicates)
-
-                .reduce(Predicate::and)
-                .orElse(t -> true);
-
-        List<Book> filteredBooks = books.values().stream()
-                .filter(bookPredicate)
-                .collect(Collectors.toList());
-        System.out.println(filteredBooks.size());
-        return filteredBooks;
+       return books.get(bookId);
     }
 }

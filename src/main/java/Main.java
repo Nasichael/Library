@@ -1,3 +1,8 @@
+import library.data.Book;
+import library.data.CategoryBook;
+import library.engine.Library;
+import library.engine.Filters;
+
 import java.util.List;
 
 public class Main {
