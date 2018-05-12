@@ -18,7 +18,6 @@ public class Filters {
     public static Predicate<Book> category(CategoryBook categoryBook) {
         return book -> book.getCategoryBook().equals(categoryBook);
     }
-
     public static Predicate<Book> year(Short year) {
         return book -> book.getYear() == year;
     }

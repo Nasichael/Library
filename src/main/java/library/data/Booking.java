@@ -38,4 +38,36 @@ public class Booking {
     {
         return counter++;
     }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id=" + id +
+                ", user=" + user +
+                ", book=" + book +
+                ", date=" + date +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Booking booking = (Booking) o;
+
+        if (getId() != booking.getId()) return false;
+        if (!getUser().equals(booking.getUser())) return false;
+        if (!getBook().equals(booking.getBook())) return false;
+        return getDate().equals(booking.getDate());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getUser().hashCode();
+        result = 31 * result + getBook().hashCode();
+        result = 31 * result + getDate().hashCode();
+        return result;
+    }
 }

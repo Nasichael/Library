@@ -43,4 +43,13 @@ public class User {
         result = 31 * result + getFirstName().hashCode();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
+                '}';
+    }
 }

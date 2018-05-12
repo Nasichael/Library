@@ -1,5 +1,7 @@
 package library.engine;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -8,6 +10,8 @@ import library.data.Booking;
 import library.data.CategoryBook;
 import library.data.User;
 import library.inventory.BookInventory;
+import library.inventory.BookingInventory;
+import library.inventory.UserInventory;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -15,8 +19,11 @@ import static org.junit.Assert.assertEquals;
 
 public class LibraryTest {
 
-    Library library = new Library();
     BookInventory bookInventory = new BookInventory();
+    BookingInventory bookingInventory = new BookingInventory();
+    UserInventory userInventory = new UserInventory();
+
+    Library library = new Library(bookInventory, bookingInventory, userInventory);
 
     @Test
     public void shouldSearchForExistingTitle() {
@@ -65,7 +72,7 @@ public class LibraryTest {
     public void shouldSearchByID() {
 
         //given
-        int ID = 4001;
+        int ID = 4;
 
         //when
         final List<Book> bookList = library.search(Filters.ID(ID));
@@ -107,8 +114,8 @@ public class LibraryTest {
     public void shouldRentTwoBooks() {
         //given
 
-        Book book = bookInventory.getById(3);
-        Book book2 = bookInventory.getById(2);
+        Book book = bookInventory.getById(8);
+        Book book2 = bookInventory.getById(7);
         User user = new User(1, "Zan", "Ala");
         //when
 
@@ -118,12 +125,34 @@ public class LibraryTest {
         //then
         //rent.getUser()==user
         //rent.getBook() ==book
-        assertEquals(book,rent.getBook());
-        assertEquals(user,rent.getUser());
+        assertEquals(book, rent.getBook());
+        assertEquals(user, rent.getUser());
 
         Collection<Booking> bookings = library.getRentedBooksForUser(user);
         assertEquals(2, bookings.size());
     }
 
+    @Test
+    public void shouldReturnBook() {
+
+        //given
+        Book book = bookInventory.getById(3);
+        Book book2 = bookInventory.getById(6);
+        Book book3 = bookInventory.getById(5);
+        User user = userInventory.getById(7);
+        User user2 = userInventory.getById(2);
+        Booking booking1 = library.rent(book, user);
+        Booking booking2 = library.rent(book2, user);
+        Booking booking3 = library.rent(book3, user2);
+
+        //when
+        library.returnBook(booking2);
+
+        //then
+        assertEquals(2, bookingInventory.getBookings().size());
+
+        Collection<Booking> bookings = library.getRentedBooksForUser(user);
+        assertEquals(1, bookings.size());
+    }
 }
 
