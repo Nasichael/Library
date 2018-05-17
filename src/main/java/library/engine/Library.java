@@ -13,6 +13,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Library {
+    public static final int BOOKING_LIMIT = 3;
 
     //  Map<Integer, Book> cds = new HashMap<>();
 
@@ -49,11 +50,24 @@ public class Library {
 
     public Collection<Booking> getRentedBooksForUser(User user) {
         return bookingInventory.findBookingsForUser(user);
-
     }
 
     public void returnBook(Booking booking) {
         bookingInventory.removeBook(booking);
     }
 
+    public boolean checkBookLimit(User user) {
+
+        int count = bookingInventory.findBookingsForUser(user).size();
+        if (count >= BOOKING_LIMIT) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean checkIfBookRented(Book book) {
+        Optional<Booking> booking = bookingInventory.findBookingforBookOptional(book);
+        return booking.isPresent();
+    }
 }

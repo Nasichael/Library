@@ -154,5 +154,67 @@ public class LibraryTest {
         Collection<Booking> bookings = library.getRentedBooksForUser(user);
         assertEquals(1, bookings.size());
     }
+
+    @Test
+    public void shouldCheckIfBookNumberReachedLimit() {
+        //given
+        User user = userInventory.getById(7);
+        Book book = bookInventory.getById(3);
+        Book book2 = bookInventory.getById(6);
+        library.rent(book, user);
+        library.rent(book2, user);
+
+        //when
+        final boolean checkBookLimit = library.checkBookLimit(user);
+        //then
+        assertEquals(false, checkBookLimit);
+
+    }
+
+    @Test
+    public void shouldCheckIfBookNumberNotReachedLimit() {
+        //given
+        User user = userInventory.getById(7);
+        Book book = bookInventory.getById(3);
+        Book book2 = bookInventory.getById(6);
+        Book book3 = bookInventory.getById(1);
+        library.rent(book, user);
+        library.rent(book2, user);
+        library.rent(book3, user);
+
+        //when
+        final boolean checkBookLimit = library.checkBookLimit(user);
+        //then
+        assertEquals(true, checkBookLimit);
+
+    }
+
+    @Test
+    public void shouldCheckIfBookRented() {
+        //given
+        User user = userInventory.getById(7);
+        Book book = bookInventory.getById(3);
+        library.rent(book, user);
+
+        //when
+        final boolean checkRentedBook = library.checkIfBookRented(book);
+
+        //then
+        assertEquals(true, checkRentedBook);
+    }
+
+    @Test
+    public void shouldCheckIfNotBookRented() {
+        //given
+        Book book = bookInventory.getById(3);
+
+        //when
+        final boolean checkRentedBook = library.checkIfBookRented(book);
+
+        //then
+        assertEquals(false, checkRentedBook);
+    }
+
+
 }
 
