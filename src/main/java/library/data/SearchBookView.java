@@ -4,13 +4,49 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class SearchBookView {
-    private List<Book> searchViewBooks;
-    private BookStatus status;
-    private LocalDate dateOfBookReturn;
 
-    public SearchBookView(List<Book> searchViewBooks, BookStatus status, LocalDate dateOfBookReturn) {
-        this.searchViewBooks = searchViewBooks;
-        this.status = status;
-        this.dateOfBookReturn = dateOfBookReturn;
+    private LocalDate date;
+    private String author;
+    private short year;
+    private CategoryBook categoryBook;
+    private String title;
+    private int id;
+    private BookStatus bookStatus;
+
+    public SearchBookView(int id, String author, CategoryBook categoryBook, String title, short year, BookStatus bookStatus, LocalDate date) {
+
+        this.id = id;
+        this.date = date;
+        this.author = author;
+        this.year = year;
+        this.categoryBook = categoryBook;
+        this.title = title;
+        this.bookStatus = bookStatus;
+
+    }
+
+    LocalDate futureDate = LocalDate.now().plusMonths(1);
+
+    public SearchBookView(int id, String author, CategoryBook categoryBook, String title, short year, BookStatus bookStatus) {
+        this.author = author;
+        this.year = year;
+        this.categoryBook = categoryBook;
+        this.title = title;
+        this.id = id;
+        this.bookStatus = bookStatus;
+    }
+
+
+    @Override
+    public String toString() {
+        return
+                "[author='" + author + '\'' +
+                        ", title='" + title + '\'' +
+                        ", categoryBook=" + categoryBook +
+                        ", year=" + year +
+                        ", id=" + id  +
+                        ", Status=" + bookStatus  +
+                        ", Return Date=" + date + "]";
+
     }
 }

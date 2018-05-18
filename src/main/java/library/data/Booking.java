@@ -10,12 +10,14 @@ public class Booking {
     private Book book;
     private LocalDate date;
 
+
     public Booking(int id, User user, Book book, LocalDate date) {
 
         this.id = id;
         this.user = user;
         this.book = book;
         this.date = date;
+
     }
 
     public int getId() {

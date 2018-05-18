@@ -3,6 +3,8 @@ package library.inventory;
 import library.data.Book;
 import library.data.Booking;
 import library.data.User;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -24,6 +26,12 @@ public class BookingInventory {
 
     public void removeBook(Booking booking) {
         bookings.remove(booking);
+    }
+
+    public LocalDate calculateReturnDate(LocalDate date) {
+
+        LocalDate oneMonthLaterDate = date.plusMonths(1);
+        return oneMonthLaterDate;
     }
 
     public Booking getById(int bookingId) {

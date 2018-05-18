@@ -1,6 +1,4 @@
-import library.data.Book;
-import library.data.Booking;
-import library.data.CategoryBook;
+import library.data.*;
 import library.engine.Library;
 import library.engine.Filters;
 import library.inventory.BookInventory;
@@ -30,7 +28,10 @@ public class Main {
         List<Book> books1 = library.search(Filters.author("Jo"), Filters.title("Ja"));
         System.out.println(books1);
 
-
-
+        Book book = bookInventory.getById(13);
+        User user = userInventory.getById(2);
+        library.rent(book,user);
+        List<SearchBookView> view1 = library.searchBookView(Filters.title("an"));
+        System.out.println(view1);
     }
 }

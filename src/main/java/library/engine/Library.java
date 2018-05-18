@@ -4,6 +4,7 @@ import library.data.*;
 import library.inventory.BookInventory;
 import library.inventory.BookingInventory;
 import library.inventory.UserInventory;
+
 import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Predicate;
@@ -36,6 +37,31 @@ public class Library {
                 .collect(Collectors.toList());
         System.out.println(filteredBooks.size());
         return filteredBooks;
+    }
+
+    public List<SearchBookView> searchBookView(Predicate<Book>... predicates) {
+
+        List<Book> filteredBooks = this.search(predicates);
+
+
+        List<SearchBookView> filteredView =
+                filteredBooks.stream().map(p1 -> {
+                    Optional<Booking> date =
+                            bookingInventory.bookings.stream().filter(p2 -> p2.getBook().getId() == p1.getId()).findAny();
+
+                    if (date.isPresent()) {
+
+                        return new SearchBookView(p1.getId(), p1.getAuthor(), p1.getCategoryBook(),
+                                p1.getTitle(), p1.getYear(), BookStatus.RENTED, bookingInventory.calculateReturnDate(date.get().getDate()));
+
+                    } else {
+
+                        return new SearchBookView(p1.getId(), p1.getAuthor(), p1.getCategoryBook(),
+                                p1.getTitle(), p1.getYear(), BookStatus.AVAILABLE);
+                    }
+                }).collect(Collectors.toList());
+
+        return filteredView;
     }
 
     public Booking rent(Book book, User user) {

@@ -3,12 +3,10 @@ package library.engine;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
-import library.data.Book;
-import library.data.Booking;
-import library.data.CategoryBook;
-import library.data.User;
+import library.data.*;
 import library.inventory.BookInventory;
 import library.inventory.BookingInventory;
 import library.inventory.UserInventory;
@@ -215,6 +213,37 @@ public class LibraryTest {
         assertEquals(false, checkRentedBook);
     }
 
+    @Test
+    public void shouldCreateSearchBookView() {
+        //given
+        Book book = bookInventory.getById(13);
+        User user = userInventory.getById(4);
 
+        //when
+        library.rent(book, user);
+        List<SearchBookView> searchBookView = library.searchBookView(Filters.title("an"));
+
+        //then
+        assertEquals(3, searchBookView.size());
+
+    }
+
+    @Test
+
+    public void shouldCalculateReturnDate() {
+
+        //given
+        Book book = bookInventory.getById(12);
+        User user = userInventory.getById(6);
+        library.rent(book, user);
+        Booking booking = bookingInventory.getById(0);
+
+        //when
+        LocalDate returnDate = bookingInventory.calculateReturnDate(booking.getDate());
+
+        //then
+        assertEquals(LocalDate.now().plusMonths(1), returnDate);
+    }
 }
+
 

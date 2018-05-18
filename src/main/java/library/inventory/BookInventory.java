@@ -2,6 +2,7 @@ package library.inventory;
 
 import library.data.Book;
 import library.data.CategoryBook;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,8 +23,10 @@ public class BookInventory {
         books.put(9, new Book("John Ronald Reuel Tolkien", (short) 1954, CategoryBook.FANTASY, "Władca Pierścieni", 9));
         books.put(10, new Book("John Ronald Reuel Tolkien", (short) 1937, CategoryBook.FANTASY, "Hobbit", 10));
         books.put(11, new Book("Joshua Bloch", (short) 2017, CategoryBook.GUIDE, "Effective Java", 11));
-        books.put(12, new Book("Edgar Rice Burroughs", (short) 1912, CategoryBook.ADVENTURE, "Tarzan of the Apes", 13));
-        books.put(13, new Book("Jules Verne", (short) 1864, CategoryBook.SCIENCEFICTION, "Journey to the Center of the Earth", 1030));
+        books.put(12, new Book("Edgar Rice Burroughs", (short) 1912, CategoryBook.ADVENTURE, "Tarzan of the Apes", 12));
+        books.put(13, new Book("Edgar Rice Burroughs", (short) 1912, CategoryBook.ADVENTURE, "Tarzan of the Apes", 13));
+        books.put(14, new Book("Edgar Rice Burroughs", (short) 1912, CategoryBook.ADVENTURE, "Tarzan of the Apes", 14));
+        books.put(15, new Book("Jules Verne", (short) 1864, CategoryBook.SCIENCEFICTION, "Journey to the Center of the Earth", 15));
     }
 
     public Collection<Book> getAll() {
@@ -31,6 +34,7 @@ public class BookInventory {
     }
 
     public Book getById(int bookId) {
-       return books.get(bookId);
+        return books.get(bookId);
     }
+
 }
