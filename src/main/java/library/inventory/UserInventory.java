@@ -19,8 +19,8 @@ public class UserInventory {
         users.add(new User(8, "Martyna", "Tomaszewska"));
 
     }
+
     public User getById(int id) {
         return users.get(id);
     }
-
 }

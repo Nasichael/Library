@@ -1,12 +1,9 @@
 package library.engine;
 
-import library.data.Book;
-import library.data.Booking;
-import library.data.User;
+import library.data.*;
 import library.inventory.BookInventory;
 import library.inventory.BookingInventory;
 import library.inventory.UserInventory;
-
 import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Predicate;
@@ -39,7 +36,6 @@ public class Library {
                 .collect(Collectors.toList());
         System.out.println(filteredBooks.size());
         return filteredBooks;
-
     }
 
     public Booking rent(Book book, User user) {
@@ -49,7 +45,7 @@ public class Library {
     }
 
     public Collection<Booking> getRentedBooksForUser(User user) {
-        return bookingInventory.findBookingsForUser(user);
+        return bookingInventory.findBookingForUser(user);
     }
 
     public void returnBook(Booking booking) {
@@ -57,8 +53,7 @@ public class Library {
     }
 
     public boolean checkBookLimit(User user) {
-
-        int count = bookingInventory.findBookingsForUser(user).size();
+        int count = bookingInventory.findBookingForUser(user).size();
         if (count >= BOOKING_LIMIT) {
             return true;
         } else {
@@ -67,7 +62,7 @@ public class Library {
     }
 
     public boolean checkIfBookRented(Book book) {
-        Optional<Booking> booking = bookingInventory.findBookingforBookOptional(book);
+        Optional<Booking> booking = bookingInventory.findBookingForBook(book);
         return booking.isPresent();
     }
 }

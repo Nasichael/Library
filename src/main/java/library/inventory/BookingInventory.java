@@ -3,11 +3,12 @@ package library.inventory;
 import library.data.Book;
 import library.data.Booking;
 import library.data.User;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class BookingInventory {
 
@@ -17,50 +18,29 @@ public class BookingInventory {
         return bookings;
     }
 
-
     public void addBooking(Booking booking) {
         bookings.add(booking);
-
     }
 
     public void removeBook(Booking booking) {
         bookings.remove(booking);
-
     }
 
     public Booking getById(int bookingId) {
         return bookings.get(bookingId);
     }
 
+    public Collection<Booking> findBookingForUser(User user) {
 
-    public Collection<Booking> findBookingsForUser(User user) {
-        Collection<Booking> userCollection = new ArrayList<>();
-        for (Booking booking : bookings) {
-            if (booking.getUser().equals(user)) {
-                userCollection.add(booking);
-            }
-        }
+        Predicate<Booking> predicate = b -> b.getUser().equals(user);
+        Collection<Booking> userCollection = bookings.stream().filter(predicate).collect(Collectors.toList());
         return userCollection;
     }
 
-    /*public Booking findBookingforBook(Book book) {
+    public Optional<Booking> findBookingForBook(Book book) {
 
-        for (Booking booking : bookings) {
-            if (booking.getBook().equals(book)) {
-                return booking;
-            }
-        }
-        return null;
-    }*/
-
-
-    public Optional<Booking> findBookingforBookOptional(Book book) {
-
-        for (Booking booking : bookings) {
-            if (booking.getBook().equals(book)) {
-                return Optional.of(booking);
-            }
-        }
-        return Optional.empty();
+        Predicate<Booking> predicate = b -> b.getBook().equals(book);
+        Optional<Booking> optional = bookings.stream().filter(predicate).findAny();
+        return optional;
     }
 }
