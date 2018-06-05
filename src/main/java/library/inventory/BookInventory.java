@@ -6,6 +6,7 @@ import library.data.CategoryBook;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class BookInventory {
 
@@ -33,8 +34,8 @@ public class BookInventory {
         return books.values();
     }
 
-    public Book getById(int bookId) {
-        return books.get(bookId);
+    public Optional<Book> getById(int bookId) {
+        return Optional.ofNullable(books.get(bookId));
     }
 
 }

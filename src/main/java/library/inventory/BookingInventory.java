@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class BookingInventory {
 
-    public List<Booking> bookings = new ArrayList<>();
+    private List<Booking> bookings = new ArrayList<>();
 
     public List<Booking> getBookings() {
         return bookings;
@@ -34,8 +34,8 @@ public class BookingInventory {
         return oneMonthLaterDate;
     }
 
-    public Booking getById(int bookingId) {
-        return bookings.get(bookingId);
+    public Optional<Booking> getById(int bookingId) {
+        return Optional.ofNullable(bookings.get(bookingId));
     }
 
     public Collection<Booking> findBookingForUser(User user) {

@@ -17,7 +17,6 @@ public class UserInventory {
         users.add(new User(6, "Alicja", "Duda"));
         users.add(new User(7, "Mateusz", "Swarowski"));
         users.add(new User(8, "Martyna", "Tomaszewska"));
-
     }
 
     public User getById(int id) {

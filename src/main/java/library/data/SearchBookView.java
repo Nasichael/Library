@@ -22,10 +22,7 @@ public class SearchBookView {
         this.categoryBook = categoryBook;
         this.title = title;
         this.bookStatus = bookStatus;
-
     }
-
-    LocalDate futureDate = LocalDate.now().plusMonths(1);
 
     public SearchBookView(int id, String author, CategoryBook categoryBook, String title, short year, BookStatus bookStatus) {
         this.author = author;
@@ -36,7 +33,6 @@ public class SearchBookView {
         this.bookStatus = bookStatus;
     }
 
-
     @Override
     public String toString() {
         return
@@ -44,8 +40,8 @@ public class SearchBookView {
                         ", title='" + title + '\'' +
                         ", categoryBook=" + categoryBook +
                         ", year=" + year +
-                        ", id=" + id  +
-                        ", Status=" + bookStatus  +
+                        ", id=" + id +
+                        ", Status=" + bookStatus +
                         ", Return Date=" + date + "]";
 
     }

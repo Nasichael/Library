@@ -43,21 +43,16 @@ public class Library {
 
         List<Book> filteredBooks = this.search(predicates);
 
-
         List<SearchBookView> filteredView =
-                filteredBooks.stream().map(p1 -> {
-                    Optional<Booking> date =
-                            bookingInventory.bookings.stream().filter(p2 -> p2.getBook().getId() == p1.getId()).findAny();
+                filteredBooks.stream().map(book -> {
+                    Optional<Booking> booking = bookingInventory.findBookingForBook(book);
 
-                    if (date.isPresent()) {
-
-                        return new SearchBookView(p1.getId(), p1.getAuthor(), p1.getCategoryBook(),
-                                p1.getTitle(), p1.getYear(), BookStatus.RENTED, bookingInventory.calculateReturnDate(date.get().getDate()));
-
+                    if (booking.isPresent()) {
+                        return new SearchBookView(book.getId(), book.getAuthor(), book.getCategoryBook(),
+                                book.getTitle(), book.getYear(), BookStatus.RENTED, bookingInventory.calculateReturnDate(booking.get().getDate()));
                     } else {
-
-                        return new SearchBookView(p1.getId(), p1.getAuthor(), p1.getCategoryBook(),
-                                p1.getTitle(), p1.getYear(), BookStatus.AVAILABLE);
+                        return new SearchBookView(book.getId(), book.getAuthor(), book.getCategoryBook(),
+                                book.getTitle(), book.getYear(), BookStatus.AVAILABLE);
                     }
                 }).collect(Collectors.toList());
 
@@ -65,6 +60,14 @@ public class Library {
     }
 
     public Booking rent(Book book, User user) {
+        Booking booking = new Booking(Booking.getNextId(), user, book, LocalDate.now());
+        bookingInventory.addBooking(booking);
+        return booking;
+    }
+
+    public Booking rent(Long bookId, int userId) {
+
+        final User user = userInventory.getById(userId);
         Booking booking = new Booking(Booking.getNextId(), user, book, LocalDate.now());
         bookingInventory.addBooking(booking);
         return booking;
