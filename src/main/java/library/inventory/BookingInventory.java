@@ -3,7 +3,6 @@ package library.inventory;
 import library.data.Book;
 import library.data.Booking;
 import library.data.User;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;

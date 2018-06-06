@@ -62,7 +62,7 @@ public class Book {
         result = 31 * result + (int) getYear();
         result = 31 * result + getCategoryBook().hashCode();
         result = 31 * result + getTitle().hashCode();
-        result = 31 * result + getId();
+        result = (int) (31 * result + getId());
         return result;
     }
 }

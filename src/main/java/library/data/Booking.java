@@ -1,23 +1,22 @@
 package library.data;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class Booking {
 
     private static int counter = 0;
     private int id;
     private User user;
-    private Book book;
+    private Optional<Book> book;
     private LocalDate date;
 
 
-    public Booking(int id, User user, Book book, LocalDate date) {
-
+    public Booking(int id, User user, Optional <Book> book, LocalDate date) {
         this.id = id;
         this.user = user;
         this.book = book;
         this.date = date;
-
     }
 
     public int getId() {
@@ -28,7 +27,7 @@ public class Booking {
         return user;
     }
 
-    public Book getBook() {
+    public Optional<Book> getBook() {
         return book;
     }
 

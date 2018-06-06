@@ -13,8 +13,6 @@ import java.util.stream.Collectors;
 public class Library {
     public static final int BOOKING_LIMIT = 3;
 
-    //  Map<Integer, Book> cds = new HashMap<>();
-
     BookInventory bookInventory;
     BookingInventory bookingInventory;
     UserInventory userInventory;
@@ -59,15 +57,16 @@ public class Library {
         return filteredView;
     }
 
-    public Booking rent(Book book, User user) {
+   /* public Booking rent(Book book, User user) {
         Booking booking = new Booking(Booking.getNextId(), user, book, LocalDate.now());
         bookingInventory.addBooking(booking);
         return booking;
-    }
+    }*/
 
-    public Booking rent(Long bookId, int userId) {
+    public Booking rent(int bookId, int userId) {
 
         final User user = userInventory.getById(userId);
+        final Optional<Book> book = bookInventory.getById(bookId);
         Booking booking = new Booking(Booking.getNextId(), user, book, LocalDate.now());
         bookingInventory.addBooking(booking);
         return booking;
@@ -95,3 +94,5 @@ public class Library {
         return booking.isPresent();
     }
 }
+
+

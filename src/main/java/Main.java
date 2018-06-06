@@ -6,6 +6,7 @@ import library.inventory.BookingInventory;
 import library.inventory.UserInventory;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Main {
 
@@ -28,9 +29,9 @@ public class Main {
         List<Book> books1 = library.search(Filters.author("Jo"), Filters.title("Ja"));
         System.out.println(books1);
 
-        Book book = bookInventory.getById(13);
+        Optional<Book> book = bookInventory.getById(13);
         User user = userInventory.getById(2);
-        library.rent(book,user);
+        library.rent(book.get().getId(),user.getId());
         List<SearchBookView> view1 = library.searchBookView(Filters.title("an"));
         System.out.println(view1);
     }
