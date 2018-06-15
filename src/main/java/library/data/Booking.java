@@ -8,11 +8,11 @@ public class Booking {
     private static int counter = 0;
     private int id;
     private User user;
-    private Optional<Book> book;
+    private Book book;
     private LocalDate date;
 
 
-    public Booking(int id, User user, Optional <Book> book, LocalDate date) {
+    public Booking(int id, User user, Book book, LocalDate date) {
         this.id = id;
         this.user = user;
         this.book = book;
@@ -27,7 +27,7 @@ public class Booking {
         return user;
     }
 
-    public Optional<Book> getBook() {
+    public Book getBook() {
         return book;
     }
 

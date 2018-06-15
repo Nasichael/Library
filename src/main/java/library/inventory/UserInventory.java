@@ -1,25 +1,38 @@
 package library.inventory;
 
 import library.data.User;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 
 public class UserInventory {
 
-    List<User> users = new ArrayList<>();
+    // List<User> users1 = new ArrayList<>();
+    Map<Integer, User> users = new HashMap<>();
 
     {
-        users.add(new User(1, "Alicja", "Kos"));
-        users.add(new User(2, "Barbara", "Las"));
-        users.add(new User(3, "James", "Fox"));
-        users.add(new User(4, "Patryk", "Rid"));
-        users.add(new User(5, "Paweł", "Kyrc"));
-        users.add(new User(6, "Alicja", "Duda"));
-        users.add(new User(7, "Mateusz", "Swarowski"));
-        users.add(new User(8, "Martyna", "Tomaszewska"));
+        users.put(1, new User(1, "Alicja", "Kos"));
+        users.put(2, new User(2, "Barbara", "Las"));
+        users.put(3, new User(3, "James", "Fox"));
+        users.put(4, new User(4, "Patryk", "Rid"));
+        users.put(5, new User(5, "Paweł", "Kyrc"));
+        users.put(6, new User(6, "Alicja", "Duda"));
+        users.put(7, new User(7, "Mateusz", "Swarowski"));
+        users.put(8, new User(8, "Martyna", "Tomaszewska"));
     }
 
-    public User getById(int id) {
-        return users.get(id);
+    /*  public User getById(int id) {
+          return users.stream().filter(u -> u.getId() == id).findFirst().get();*/
+
+    public Collection<User> getAll() {
+        return users.values();
     }
+
+    public Optional<User> getById(int userId) {
+        return Optional.ofNullable(users.get(userId));
+    }
+
+    /*public User getById(int userId) {
+        return users.get(userId);
+    }*/
 }
+

@@ -10,7 +10,7 @@ import library.inventory.UserInventory;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-
+import static org.junit.Assert.fail;
 
 public class LibraryTest {
 
@@ -53,7 +53,7 @@ public class LibraryTest {
         //given
         String title = "Avon";
         String author = "Lucy";
-        CategoryBook categoryBook = CategoryBook.NOVEL;
+        //CategoryBook categoryBook = CategoryBook.NOVEL;
 
         //when
         final List<Book> bookList = library.search(Filters.category(CategoryBook.NOVEL),
@@ -92,31 +92,30 @@ public class LibraryTest {
 
     @Test
     public void shouldRentOneBook() {
+
         //given
         Optional<Book> book = bookInventory.getById(5);
-       // User user = new User(1, "Zan", "Ala");
-        User user = userInventory.getById(7);
+        Optional<User> user = userInventory.getById(3);
 
         //when
-        final Booking rent = library.rent(book.get().getId(), user.getId());
+        final Booking rent = library.rent(book.get().getId(), user.get().getId());
 
         //then
-        Collection<Booking> bookings = library.getRentedBooksForUser(user);
+        Collection<Booking> bookings = library.getRentedBooksForUser(user.get());
         assertEquals(1, bookings.size());
     }
 
     @Test
     public void shouldRentTwoBooks() {
-        //given
 
+        //given
         Optional<Book> book = bookInventory.getById(8);
         Optional<Book> book2 = bookInventory.getById(7);
-        User user = new User(1, "Zan", "Ala");
+        Optional<User> user = userInventory.getById(1);
 
         //when
-
-        final Booking rent = library.rent(book2.get().getId(), user.getId());
-        final Booking rent2 = library.rent(book.get().getId(), user.getId());
+        final Booking rent = library.rent(book2.get().getId(), user.get().getId());
+        final Booking rent2 = library.rent(book.get().getId(), user.get().getId());
 
         //then
         //rent.getUser()==user
@@ -124,7 +123,7 @@ public class LibraryTest {
        /* assertEquals(book, rent.getBook());
         assertEquals(user, rent.getUser());*/
 
-        Collection<Booking> bookings = library.getRentedBooksForUser(user);
+        Collection<Booking> bookings = library.getRentedBooksForUser(user.get());
         assertEquals(2, bookings.size());
     }
 
@@ -135,11 +134,11 @@ public class LibraryTest {
         Optional<Book> book = bookInventory.getById(3);
         Optional<Book> book2 = bookInventory.getById(6);
         Optional<Book> book3 = bookInventory.getById(5);
-        User user = userInventory.getById(7);
-        User user2 = userInventory.getById(2);
-        Booking booking1 = library.rent(book.get().getId(), user.getId());
-        Booking booking2 = library.rent(book2.get().getId(), user.getId());
-        Booking booking3 = library.rent(book3.get().getId(), user2.getId());
+        Optional<User> user = userInventory.getById(7);
+        Optional<User> user2 = userInventory.getById(2);
+        Booking booking1 = library.rent(book.get().getId(), user.get().getId());
+        Booking booking2 = library.rent(book2.get().getId(), user.get().getId());
+        Booking booking3 = library.rent(book3.get().getId(), user2.get().getId());
 
         //when
         library.returnBook(booking2);
@@ -147,21 +146,21 @@ public class LibraryTest {
         //then
         assertEquals(2, bookingInventory.getBookings().size());
 
-        Collection<Booking> bookings = library.getRentedBooksForUser(user);
+        Collection<Booking> bookings = library.getRentedBooksForUser(user.get());
         assertEquals(1, bookings.size());
     }
 
     @Test
     public void shouldCheckIfBookNumberReachedLimit() {
         //given
-        User user = userInventory.getById(7);
+        Optional<User> user = userInventory.getById(7);
         Optional<Book> book = bookInventory.getById(3);
         Optional<Book> book2 = bookInventory.getById(6);
-        library.rent(book.get().getId(), user.getId());
-        library.rent(book2.get().getId(), user.getId());
+        library.rent(book.get().getId(), user.get().getId());
+        library.rent(book2.get().getId(), user.get().getId());
 
         //when
-        final boolean checkBookLimit = library.checkBookLimit(user);
+        final boolean checkBookLimit = library.checkBookLimit(user.get());
         //then
         assertEquals(false, checkBookLimit);
 
@@ -170,16 +169,16 @@ public class LibraryTest {
     @Test
     public void shouldCheckIfBookNumberNotReachedLimit() {
         //given
-        User user = userInventory.getById(7);
+        Optional<User> user = userInventory.getById(7);
         Optional<Book> book = bookInventory.getById(3);
         Optional<Book> book2 = bookInventory.getById(6);
         Optional<Book> book3 = bookInventory.getById(1);
-        library.rent(book.get().getId(), user.getId());
-        library.rent(book2.get().getId(), user.getId());
-        library.rent(book3.get().getId(), user.getId());
+        library.rent(book.get().getId(), user.get().getId());
+        library.rent(book2.get().getId(), user.get().getId());
+        library.rent(book3.get().getId(), user.get().getId());
 
         //when
-        final boolean checkBookLimit = library.checkBookLimit(user);
+        final boolean checkBookLimit = library.checkBookLimit(user.get());
         //then
         assertEquals(true, checkBookLimit);
 
@@ -188,9 +187,9 @@ public class LibraryTest {
     @Test
     public void shouldCheckIfBookRented() {
         //given
-        User user = userInventory.getById(7);
+        Optional<User> user = userInventory.getById(7);
         Optional<Book> book = bookInventory.getById(3);
-        library.rent(book.get().getId(), user.getId());
+        library.rent(book.get().getId(), user.get().getId());
 
         //when
         final boolean checkRentedBook = library.checkIfBookRented(book.get());
@@ -215,10 +214,10 @@ public class LibraryTest {
     public void shouldCreateSearchBookView() {
         //given
         Optional<Book> book = bookInventory.getById(13);
-        User user = userInventory.getById(4);
+        Optional<User> user = userInventory.getById(4);
 
         //when
-        library.rent(book.get().getId(), user.getId());
+        library.rent(book.get().getId(), user.get().getId());
         List<SearchBookView> searchBookView = library.searchBookView(Filters.title("an"));
 
         //then
@@ -227,13 +226,12 @@ public class LibraryTest {
     }
 
     @Test
-
     public void shouldCalculateReturnDate() {
 
         //given
         Optional<Book> book = bookInventory.getById(12);
-        User user = userInventory.getById(6);
-        library.rent(book.get().getId(), user.getId());
+        Optional<User> user = userInventory.getById(6);
+        library.rent(book.get().getId(), user.get().getId());
         Optional<Booking> booking = bookingInventory.getById(0);
 
         //when
@@ -243,6 +241,40 @@ public class LibraryTest {
         assertEquals(LocalDate.now().plusMonths(1), returnDate);
     }
     //LocalDate.now().plusMonths(1)
+
+    @Test
+    public void shouldNotFindBook() {
+
+        //given
+        Optional<User> user = userInventory.getById(2);
+        final int bookId = 23;
+
+        try {
+            //when
+            Booking booking = library.rent(bookId, user.get().getId());
+        } catch (IllegalArgumentException e) {
+
+            //then
+            assertEquals("book with the id: " + bookId + " is unavailable", e.getMessage());
+        }
+
+    }
+
+    @Test
+    public void shouldNotFindUser() {
+        //given
+        Optional<Book> book = bookInventory.getById(2);
+        final int userId = 23;
+        try {
+            //when
+        Booking booking = library.rent(book.get().getId(), 23);
+        } catch (IllegalArgumentException e) {
+            //then
+            assertEquals("user with the id: " + userId + " is not valid", e.getMessage());
+        }
+    }
 }
+
+
 
 

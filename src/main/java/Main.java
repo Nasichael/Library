@@ -22,17 +22,19 @@ public class Main {
 
     private void start() {
 
-        List<Book> books2 = library.search(Filters.title("an"));
+        /*List<Book> books2 = library.search(Filters.title("an"));
         System.out.println(books2);
         List<Book> books3 = library.search(Filters.category(CategoryBook.ADVENTURE));
         System.out.println(books3);
         List<Book> books1 = library.search(Filters.author("Jo"), Filters.title("Ja"));
-        System.out.println(books1);
+        System.out.println(books1);*/
 
         Optional<Book> book = bookInventory.getById(13);
-        User user = userInventory.getById(2);
-        library.rent(book.get().getId(),user.getId());
+        Optional <User> user = userInventory.getById(2);
+        library.rent(book.get().getId(),user.get().getId());
         List<SearchBookView> view1 = library.searchBookView(Filters.title("an"));
         System.out.println(view1);
+        List<SearchBookView> view2 = library.searchBookView(Filters.ID(15));
+        System.out.println(view2);
     }
 }
